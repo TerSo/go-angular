@@ -7,11 +7,12 @@
 *.dylib
 
 # Server
-go/bin/*
-go/pkg/**/
-go/src/github.com/**/
-go/src/gopkg.in/**/
-
+go/bin/
+go/pkg/
+go/src/*
+!go/src/app/
+!go/src/config/
+!go/src/modules/
 
 # Test binary, built with `go test -c`
 *.test

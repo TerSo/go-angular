@@ -1,3 +1,3 @@
-module settings
+module config/settings
 
 go 1.15

@@ -1,4 +1,4 @@
-module models
+module models/main
 
 go 1.15
 

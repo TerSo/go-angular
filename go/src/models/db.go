@@ -13,9 +13,20 @@ type DB struct {
 type MODEL struct {
 	*gorm.Model
 }
+/*
+type DBManager interface {
+    CreateTable(tableName string) (string,error)
+}
+
+func CreateTable(tableName string)(string, error) {
+    return "ok", nil
+}
+*/
 
 type DataStore interface {
-    GetUsers() ([]*User, error)
+    GetUsers() ([]*InfoUser, error)
+    GetUser(id uint) (*User, error)
+    GetInfoUser(id uint) (*InfoUser, error)
     BuildUser(*User) (bool)
     CreateUser(*User) (*User, error)
 }

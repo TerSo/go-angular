@@ -28,9 +28,10 @@ func GetEnvData(s string) Config {
             "host":"localhost",
             "port":"4201"},
         "mysql":{
-            "host":"localhost",
-            "user":"root",
-            "password":""
+            "host":"",
+            "user":"terso",
+			"password":"terso",
+			"db":"go_angular_development"
 		}
 	}`)
 
@@ -39,9 +40,10 @@ func GetEnvData(s string) Config {
             "host":"localhost",
             "port":"4201"},
         "mysql":{
-            "host":"localhost",
+            "host":"",
             "user":"root",
-            "password":""
+			"password":"",
+			"db":"go_angular_production"
 		}
 	}`)
 	

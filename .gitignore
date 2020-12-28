@@ -5,6 +5,7 @@
 *.dll
 *.so
 *.dylib
+*__debug_bin
 
 # Server
 go/bin/
@@ -13,6 +14,7 @@ go/src/*
 !go/src/app/
 !go/src/config/
 !go/src/models/
+!go/src/utilities/
 
 # Test binary, built with `go test -c`
 *.test

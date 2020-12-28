@@ -17,7 +17,6 @@ type Env struct {
 	db models.DataStore
 }
 
-
 func main() {
 	envData := settings.GetEnvData(env)
 	
@@ -27,7 +26,7 @@ func main() {
 	if errorDB != nil {
         log.Panic(errorDB)
 	}
-	
+
 	env := &Env{db}
 	users, e := env.db.GetUsers()
 	user, ee := env.db.GetUser(1)

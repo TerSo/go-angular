@@ -1,5 +1,4 @@
 package models
-//import "fmt"
 
 type InfoUser struct {
     ID          uint
@@ -43,7 +42,7 @@ func (db *DB) GetUsers() ([]*InfoUser, error) {
     */
 }
 
-func (db *DB) GetUser(id uint) (*User, error) {
+func (db *DB) GetUser(id uint64) (*User, error) {
     useRow := db.Where("id = ?", id).Find(&User{})
     user := new(User)
     row := useRow.Scan(&user)
@@ -53,7 +52,7 @@ func (db *DB) GetUser(id uint) (*User, error) {
     return user, nil
 }
 
-func (db *DB) GetInfoUser(id uint) (*InfoUser, error) {
+func (db *DB) GetInfoUser(id uint64) (*InfoUser, error) {
     user := db.Where("id = ?", id).Find(&User{})
     infoUser := new(InfoUser)
     row := user.Scan(&infoUser)

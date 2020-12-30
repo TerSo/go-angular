@@ -23,10 +23,10 @@ func CreateTable(tableName string)(string, error) {
 }
 */
 
-type DataStore interface {
+type UserRepository interface {
     GetUsers() ([]*InfoUser, error)
-    GetUser(id uint) (*User, error)
-    GetInfoUser(id uint) (*InfoUser, error)
+    GetUser(id uint64) (*User, error)
+    GetInfoUser(id uint64) (*InfoUser, error)
     BuildUser(*User) (bool)
     CreateUser(*User) (*User, error)
 }

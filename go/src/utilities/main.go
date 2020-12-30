@@ -9,7 +9,7 @@ import (
 var env = "development"
 
 type Env struct {
-	db models.DataStore
+	db models.UserRepository
 }
 
 func main() {
@@ -24,9 +24,11 @@ func main() {
 
 	db.AutoMigrate(&models.User{})
 	env := &Env{db}
-
-	user := models.User{NickName: "admin", Password: "admin", Active: true, AuthType: "1fa"}
-	created, errCreated := env.db.CreateUser(&user)
+	user := &models.User{}
+	user.NickName = "admin"
+	user.Password = "admin"
+	// user := models.User{NickName: "admin", Password: "admin", Active: true, AuthType: "1fa"}
+	created, errCreated := env.db.CreateUser(user)
 	fmt.Println(created)
 	fmt.Println(errCreated)
 }

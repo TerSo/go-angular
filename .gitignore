@@ -13,6 +13,7 @@ go/pkg/
 go/src/*
 !go/src/app/
 !go/src/config/
+!go/src/logger/
 !go/src/models/
 !go/src/utilities/
 

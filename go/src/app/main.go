@@ -10,6 +10,7 @@ import (
 	"models/main"
 	"github.com/rs/cors"
 	"github.com/julienschmidt/httprouter"
+	"logger"
 )
 
 var env = "development"
@@ -23,9 +24,11 @@ type UserRepository struct {
 	db models.UserRepository
 }
 
+var standardLogger = logger.Init()
+
 func main() {
 	envData := settings.GetEnvData(env)
-	
+
 	// MySQL Connection
 	dns := fmt.Sprintf("%s:%s@%s/%s?charset=utf8&parseTime=True&loc=Local", envData.Mysql.User, envData.Mysql.Password, envData.Mysql.Host, envData.Mysql.DB)
 	db, errorDB := models.InitDB("mysql", dns)
@@ -45,7 +48,7 @@ func main() {
 	// End points
 	router := httprouter.New()
 	router.GET("/", homeHandler)
-	router.GET("/users/:id", userModel.User)
+	router.GET("/users/:id", userModel.GetUser)
 	router.GET("/info_users/:id", userModel.InfoUser)
 
 	// Server
@@ -66,7 +69,7 @@ func homeHandler(w http.ResponseWriter, req *http.Request, ps httprouter.Params)
 	w.Write(js)
 }
 // GET /users/:id
-func (model *UserRepository) User(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+func (model *UserRepository) GetUser(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
 	id, errConversion := strconv.ParseUint(ps.ByName("id"), 0, 64)
 	if errConversion != nil {
@@ -76,6 +79,7 @@ func (model *UserRepository) User(w http.ResponseWriter, req *http.Request, ps h
 
 	user, errQuery := model.db.GetUser(id)
 	if errQuery != nil {
+		standardLogger.ThrowError(http.StatusInternalServerError, "GetUser", errQuery.Error())
 		http.Error(w, errQuery.Error(), http.StatusInternalServerError)
 		return
 	}

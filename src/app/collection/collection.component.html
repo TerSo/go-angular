@@ -1,0 +1,11 @@
+<mat-nav-list #list>
+	<ng-container *ngFor="let o of objects">
+        <a mat-list-item routerLink="/users/{{o.id}}" routerLinkActive="active">
+            <mat-icon mat-list-icon>folder</mat-icon>
+            {{o.nickname}}
+            <span>{{o.name + ' & ' + o.surname}}</span>
+        </a>
+	</ng-container>
+</mat-nav-list>
+
+  

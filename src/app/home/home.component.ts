@@ -11,8 +11,8 @@ export class HomeComponent implements OnInit {
   title: string;
   subTitle: string;
   
-  constructor(Api: ApiService) {
-    Api.getHomeInfo()
+  constructor(api: ApiService) {
+    api.getHomeInfo()
     .subscribe( 
       (response: any) => {
         this.title = response.Title;

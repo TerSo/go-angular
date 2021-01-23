@@ -1,0 +1,15 @@
+:host {
+    a {
+        color: blue;
+        font-size: 20px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        mat-icon {
+            color: blue;
+            margin-right: 12px;
+        }    
+        span {
+            color: grey;
+            margin-left: 12px;
+        }
+    }
+}

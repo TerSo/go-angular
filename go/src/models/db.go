@@ -25,10 +25,13 @@ func CreateTable(tableName string)(string, error) {
 
 type UserRepository interface {
     GetUsers() ([]*InfoUser, error)
+    CreateUser(*User) (*User, error)
     GetUser(id uint64) (*User, error)
+   // UpdateUser(*User) (*User, error)
+ //   DeleteUser(uint64) (*User, error)
     GetInfoUser(id uint64) (*InfoUser, error)
     BuildUser(*User) (bool)
-    CreateUser(*User) (*User, error)
+    
 }
 
 func InitDB(dbName string, dataSourceName string) (*DB, error) {

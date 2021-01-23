@@ -1,19 +1,19 @@
 package models
 
 type InfoUser struct {
-    ID          uint
-    NickName    string
-    Name		string
-    Surname 	string
-    Email 		string
+    ID          uint    `json:"id"`
+    NickName    string  `json:"nickname"`
+    Name		string  `json:"name"`
+    Surname 	string  `json:"surname"`
+    Email 		string  `json:"email"`
 }
 
 type User struct {
     MODEL
     InfoUser
-    Active      bool
-    AuthType    string
-    Password  	string
+    Active      bool    `json:"active"`
+    AuthType    string  `json:"authType"`
+    Password  	string  `json:"password"`
 }
    
 func (db *DB) GetUsers() ([]*InfoUser, error) {
@@ -41,7 +41,22 @@ func (db *DB) GetUsers() ([]*InfoUser, error) {
     return users, err
     */
 }
-
+func (db *DB) GetInfoUser(id uint64) (*InfoUser, error) {
+    user := db.Where("id = ?", id).Find(&User{})
+    infoUser := new(InfoUser)
+    row := user.Scan(&infoUser)
+    if row.Error != nil {
+        return nil, row.Error
+	}
+    return infoUser, nil
+}
+func (db *DB) CreateUser(user *User) (*User, error) {
+    created := db.Create(&user)
+    if created.Error != nil {
+        return nil, created.Error
+	}
+    return user, nil
+}
 func (db *DB) GetUser(id uint64) (*User, error) {
     useRow := db.Where("id = ?", id).Find(&User{})
     user := new(User)
@@ -52,22 +67,22 @@ func (db *DB) GetUser(id uint64) (*User, error) {
     return user, nil
 }
 
-func (db *DB) GetInfoUser(id uint64) (*InfoUser, error) {
-    user := db.Where("id = ?", id).Find(&User{})
-    infoUser := new(InfoUser)
-    row := user.Scan(&infoUser)
-    if row.Error != nil {
-        return nil, row.Error
+func (db *DB) UpdateUser(user *User) (*User, error) {
+    updated := db.Save(&user)
+    if updated.Error != nil {
+        return nil, updated.Error
 	}
-    return infoUser, nil
+    return user, nil
+}
+func (db *DB) DeleteUser(id uint64) (string, error) {
+    deleted := db.Delete(&User{}, id)
+    if deleted.Error != nil {
+        return "", deleted.Error
+	}
+    return "ok", nil
 }
 
 func (db *DB) BuildUser(user *User) (bool) {
     newUser := db.NewRecord(user)
     return newUser
-}
-
-func (db *DB) CreateUser(user *User) (*User, error) {
-    db.Create(&user)
-    return user, nil
 }

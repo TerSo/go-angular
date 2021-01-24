@@ -44,6 +44,15 @@ export class ApiService {
     );
   }
 
+  createUser(user: any): any {
+    const url = this.baseUrl + '/users';
+    console.log(url);
+    return this.http.post(url, user, this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {

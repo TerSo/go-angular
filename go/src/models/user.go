@@ -17,7 +17,8 @@ type User struct {
 }
    
 func (db *DB) GetUsers() ([]*InfoUser, error) {
-    users := db.Find(&User{})
+    
+    users := db.Find(&[]User{})
     infoUsers := make([]*InfoUser, 0)
     row := users.Scan(&infoUsers)
     if row.Error != nil {

@@ -1,0 +1,12 @@
+<div class="form-container">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <mat-form-field *ngFor="let key of formKeys" hintLabel="Max 10 characters" appearance="fill">
+            <mat-label>{{key}}</mat-label>
+            <input matInput #hintControl formControlName="{{key}}" maxlength="10" placeholder="Enter a nickname">
+            <mat-hint align="end">{{hintControl.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+        <div>
+            <button mat-button color="primary" type="submit" [disabled]="!createForm.valid">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
-import {FormControl} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
+import {FormSettings} from '../../../models/form';
 
 
 @Component({
@@ -9,16 +10,19 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  formKeys: string[];
   @Input()  formSettings: any;
-  @Input()  createForm: FormControl;
   @Input()  method: string;
+  createForm: FormGroup;
   
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    this.formKeys = Object.keys(this.createForm.value);
+    let forms = {}
+    this.formSettings.forEach((element: FormSettings) => {
+      forms[element.name] = element.form
+    });
+    this.createForm = new FormGroup(forms);
   }
 
   onSubmit() {

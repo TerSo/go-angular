@@ -1,8 +1,8 @@
 
-import { HttpInterceptor } from '@angular/common/http';
-import {Validators, FormGroup, FormControl } from '@angular/forms';
+import {Validators, FormControl } from '@angular/forms';
+import {FormSettings} from './form';
 
-interface InfoUser {
+export interface InfoUser {
     id:         number
     nickName:   string
     name:       string
@@ -10,73 +10,46 @@ interface InfoUser {
     email: 		string
 }
 
-interface User {
+export interface User {
     id:         number
     Active:     boolean
     AuthType:   string
     info:       InfoUser
 }
 
-interface UserFormStettings {
-    type:           string
-    name:           string
-    label:          string
-    maxChars?:      number
-    hintLabel?:       string
-    placeHolder?:   string
-}
-
-export interface UserForm {
-    settings:   UserFormStettings[]
-    form:       FormGroup
-}
-
-export function setForm(): FormGroup {
-    return new FormGroup({
-        nickname:   new FormControl('', [Validators.required, Validators.maxLength(10)]),
-        email:      new FormControl('', Validators.required),
-        name:       new FormControl('', Validators.required),
-        surname:    new FormControl('', Validators.required)
-    });
-}
-
-export function buildForm(): UserForm {
-    let form = new FormGroup({
-        nickname:   new FormControl('', [Validators.required, Validators.maxLength(10)]),
-        email:      new FormControl('', Validators.required),
-        name:       new FormControl('', Validators.required),
-        surname:    new FormControl('', Validators.required)
-    });
-    return {
-        settings:   [
+export function buildUserForm(): FormSettings[] {
+    return [
             {
                 type:           'hintInput',
                 name:           'nickname',
                 label:          'Nickname',
                 maxChars:       10,
                 hintLabel:        'Max 10 charactesrs',
-                placeHolder:    'Type a nickname'
+                placeHolder:    'Type a nickname',
+                form:           new FormControl('', [Validators.required, Validators.maxLength(10)])
             },
             {
                 type:           'simpleInput',
                 name:           'name',
                 label:          'Name',
-                placeHolder:    'Type a name'
+                placeHolder:    'Type a name',
+                form:           new FormControl('', Validators.required)
             },
             {
                 type:           'simpleInput',
                 name:           'surname',
                 label:          'Surname',
-                placeHolder:    'Type a surname'
+                placeHolder:    'Type a surname',
+                form:           new FormControl('', Validators.required)
             },
             {
                 type:           'simpleInput',
                 name:           'email',
                 label:          'Email',
-                placeHolder:    'Type an email address'
+                placeHolder:    'Type an email address',
+                form:           new FormControl('', Validators.required)
             }
-        ],
-        form:       form
-    }
+        ];
+    
 }
 

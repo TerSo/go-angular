@@ -14,10 +14,7 @@ export class UserComponent implements OnInit {
   constructor(
     private api: ApiService,
     private route: ActivatedRoute
-   // ApiService: ApiService,
-    ) {
-  //  this.api = ApiService;
-   }
+  ) {}
 
   ngOnInit() {
     let id = Number(this.route.snapshot.paramMap.get('ID'))

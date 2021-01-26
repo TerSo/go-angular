@@ -4,13 +4,14 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {CreateComponent} from './crud/create/create.component'
-
+import {StoreComponent} from './store/store.component';
+import {ViewComponent} from './view/view.component';
+import {CollectionComponent} from './collection/collection.component'
 
 @NgModule({
-  declarations: [CreateComponent],
+  declarations: [StoreComponent, ViewComponent, CollectionComponent],
   imports: [
     CommonModule,
     MatListModule,
@@ -27,7 +28,9 @@ import {CreateComponent} from './crud/create/create.component'
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    CreateComponent
+    StoreComponent,
+    ViewComponent,
+    CollectionComponent
   ]
 })
 export class SharedModule { }

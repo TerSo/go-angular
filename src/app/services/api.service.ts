@@ -46,8 +46,15 @@ export class ApiService {
 
   createUser(user: any): any {
     const url = this.baseUrl + '/users';
-    console.log(url);
     return this.http.post(url, user, this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateUser(user: any, id: number): any {
+    const url = this.baseUrl + '/users/' + id;
+    return this.http.patch(url, user, this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );

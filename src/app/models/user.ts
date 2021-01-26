@@ -17,7 +17,7 @@ export interface User {
     info:       InfoUser
 }
 
-export function buildUserForm(): FormSettings[] {
+export function BuildUserForm(): FormSettings[] {
     return [
             {
                 type:           'hintInput',

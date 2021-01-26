@@ -1,5 +1,5 @@
 <div class="form-container">
-    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
         <span *ngFor="let key of formSettings" [ngSwitch]="key.type">
             <mat-form-field *ngSwitchCase="'hintInput'" hintLabel="{{key.hintLabel}}" appearance="fill">
                 <mat-label>{{key.label}}</mat-label>
@@ -17,7 +17,7 @@
             </mat-form-field>
         </span>
         <div>
-            <button mat-button color="primary" type="submit" [disabled]="!createForm.valid">Submit</button>
+            <button mat-button color="primary" type="submit" [disabled]="!storeForm.valid">Submit</button>
         </div>
     </form>
 </div>

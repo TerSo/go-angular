@@ -14,23 +14,6 @@ import (
 )
 
 var env = "development"
-/*
-type JsonResponse struct {
-	// Reserved field to add some meta information to the API response
-	Meta interface{} `json:"meta"`
-	Data interface{} `json:"data"`
-}
-*/
-/*
-type JsonErrorResponse struct {
-	Error *ApiError `json:"error"`
-}
-
-type ApiError struct {
-	Status int16  `json:"status"`
-	Title  string `json:"title"`
-}
-*/
 
 type JsonResponse struct {
 	Ok			bool	`json:"ok"`
@@ -63,7 +46,7 @@ func main() {
 	// set CORS
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
-		   AllowedMethods: []string{"GET", "POST", "DELETE", "PUT", "OPTIONS"},
+		   AllowedMethods: []string{"GET", "POST", "DELETE", "PATCH", "OPTIONS"},
 	})
 
 	// User Model
@@ -75,34 +58,14 @@ func main() {
 	router.GET("/users", userModel.GetUsers)
 	router.POST("/users", userModel.CreateUser)
 	router.GET("/users/:id", userModel.GetUser)
-//	router.PATCH("/users/:id", userModel.UpdateUser)
-//	router.DELETE("/users/:id", userModel.DeleteUser)
+	router.PATCH("/users/:id", userModel.UpdateUser)
+	router.DELETE("/users/:id", userModel.DeleteUser)
 	
 	router.GET("/info_users/:id", userModel.InfoUser)
 
 	// Server
 	log.Fatal(http.ListenAndServe(":"+ envData.Server.Port, c.Handler(router)))
 }
-
-/*
-// Writes the response as a standard JSON response with StatusOK
-func writeOKResponse(w http.ResponseWriter, m interface{}) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(&JsonResponse{Data: m}); err != nil {
-		writeErrorResponse(w, http.StatusInternalServerError, "Internal Server Error")
-	}
-}
-
-// Writes the error response as a Standard API JSON response with a response code
-func writeErrorResponse(w http.ResponseWriter, errorCode int, errorMsg string) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(errorCode)
-	json.
-		NewEncoder(w).
-		Encode(&JsonErrorResponse{Error: &ApiError{Status: errorCode, Title: errorMsg}})
-}
-*/
 
 /********* ACTIONS *********/
 // Home page
@@ -147,26 +110,31 @@ func (model *UserRepository) CreateUser(w http.ResponseWriter, req *http.Request
 // PATCH /users/:id
 func (model *UserRepository) UpdateUser(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
-	user := &models.User{}
-	user.NickName = "demo"
-	user.Password = "demo"
+	var user = &models.User{}
+	err := json.NewDecoder(req.Body).Decode(&user)
+    if err != nil {
+		standardLogger.ThrowError(http.StatusBadRequest, "UpdateUser", err.Error())
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
 
-	createdUser, errQuery := model.db.CreateUser(user)
+	updatedUser, errQuery := model.db.UpdateUser(user)
 	if errQuery != nil {
-		standardLogger.ThrowError(http.StatusInternalServerError, "GetUser", errQuery.Error())
+		standardLogger.ThrowError(http.StatusInternalServerError, "UpdateUser", errQuery.Error())
 		http.Error(w, errQuery.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	response, err := json.Marshal(createdUser)
+	response, err := json.Marshal(updatedUser)
 	if err != nil {
+		standardLogger.ThrowError(http.StatusInternalServerError, "UpdateUser", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.Write(response)
 }
-/*
+
 // DELETE /users/:id
 func (model *UserRepository) DeleteUser(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
@@ -188,10 +156,11 @@ func (model *UserRepository) DeleteUser(w http.ResponseWriter, req *http.Request
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	
 
 	w.Write(response)
 }
-*/
+
 // GET /users/:id
 func (model *UserRepository) GetUser(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 

@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'admin/users', component: CollectionComponent},
   { path: 'admin/users/:ID', component: UserComponent},
   { path: 'admin/newUser', component: StoreUserComponent},
-  { path: 'admin/editUser', component: StoreUserComponent},
+  { path: 'admin/editUser/:ID', component: StoreUserComponent},
   { path: '',   redirectTo: '/home', pathMatch: 'full' }, // redirect to `first-component`
   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];

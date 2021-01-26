@@ -4,8 +4,8 @@ export interface FormSettings {
     type:           string
     name:           string
     label:          string
-    maxChars?:       number,
-    hintLabel?:      string
-    placeHolder?:    string
+    maxChars?:      number,
+    hintLabel?:     string
+    placeHolder?:   string
     form:           FormControl
 }

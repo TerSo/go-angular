@@ -17,7 +17,7 @@ export class StoreComponent implements OnInit {
  
   constructor(private api: ApiService) {}
 
-  private fillUserForm(obj: any) {
+  private fillForm(obj: any) {
     this.formSettings.forEach(element => {
       element.form.setValue(obj[element.name]);
     });
@@ -34,7 +34,7 @@ export class StoreComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['obj'].currentValue) {
         this.obj = changes['obj'].currentValue
-        this.fillUserForm(this.obj);
+        this.fillForm(this.obj);
     }
 }
 

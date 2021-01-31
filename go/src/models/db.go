@@ -27,7 +27,7 @@ type UserRepository interface {
     GetUsers() ([]*InfoUser, error)
     CreateUser(*User) (*User, error)
     GetUser(id uint64) (*User, error)
-    UpdateUser(*User) (*User, error)
+    UpdateUser(*User, uint64) (*User, error)
     DeleteUser(id uint64) (string, error)
     GetInfoUser(id uint64) (*InfoUser, error)
     BuildUser(*User) (bool)

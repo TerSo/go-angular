@@ -68,13 +68,16 @@ func (db *DB) GetUser(id uint64) (*User, error) {
     return user, nil
 }
 
-func (db *DB) UpdateUser(user *User) (*User, error) {
-    updated := db.Save(&user)
+func (db *DB) UpdateUser(user *User, id uint64) (*User, error) {
+    oldUser := db.Where("id = ?", id).Find(&User{})
+    updated := oldUser.Updates(&user)
+   
     if updated.Error != nil {
         return nil, updated.Error
 	}
     return user, nil
 }
+
 func (db *DB) DeleteUser(id uint64) (string, error) {
     deleted := db.Delete(&User{}, id)
     if deleted.Error != nil {

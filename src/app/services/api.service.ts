@@ -60,6 +60,14 @@ export class ApiService {
     );
   }
 
+  deleteUser(id: number): any {
+    const url = this.baseUrl + '/users/' + id;
+    return this.http.delete(url)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {

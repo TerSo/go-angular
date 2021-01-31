@@ -110,6 +110,12 @@ func (model *UserRepository) CreateUser(w http.ResponseWriter, req *http.Request
 // PATCH /users/:id
 func (model *UserRepository) UpdateUser(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
+	id, errConversion := strconv.ParseUint(ps.ByName("id"), 0, 0)
+	if errConversion != nil {
+		http.Error(w, errConversion.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	var user = &models.User{}
 	err := json.NewDecoder(req.Body).Decode(&user)
     if err != nil {
@@ -118,14 +124,16 @@ func (model *UserRepository) UpdateUser(w http.ResponseWriter, req *http.Request
         return
     }
 
-	updatedUser, errQuery := model.db.UpdateUser(user)
+
+	storedUser, errQuery := model.db.UpdateUser(user, id) 
 	if errQuery != nil {
 		standardLogger.ThrowError(http.StatusInternalServerError, "UpdateUser", errQuery.Error())
 		http.Error(w, errQuery.Error(), http.StatusInternalServerError)
 		return
 	}
+	
 
-	response, err := json.Marshal(updatedUser)
+	response, err := json.Marshal(storedUser)
 	if err != nil {
 		standardLogger.ThrowError(http.StatusInternalServerError, "UpdateUser", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)

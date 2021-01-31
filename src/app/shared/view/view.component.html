@@ -1,1 +1,30 @@
-<p>view works!</p>
+<ng-container *ngFor="let v of view" [ngSwitch]="v.type">
+  
+  <!-- VIEW -->
+  <mat-card *ngSwitchCase="'card'" appearance="fill" class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{v.title}}</mat-card-title>
+      <mat-card-subtitle>{{v.subTitle}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content><p>{{v.content}}</p></mat-card-content>
+    <mat-card-actions>
+      <button *ngIf="v.edit" mat-button>EDIT</button>
+      <button *ngIf="v.delete" mat-button>DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+  
+   <!-- COLLECTION -->
+  <mat-nav-list #list *ngSwitchCase="'collection'">
+    <mat-list-item>
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h3 mat-line>{{v.title}}</h3>
+        <p mat-line>{{v.subTitle}}</p>
+        <button mat-button (click)="navigateTo(v.edit)" routerLinkActive="active">EDIT</button>
+        <button mat-button (click)="delete(v.id)" routerLinkActive="active" *ngIf="v.delete">DELETE</button>
+    </mat-list-item>
+  </mat-nav-list>
+
+</ng-container>
+

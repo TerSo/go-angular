@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserComponent } from './user/user.component';
-import { UsersComponent } from './users/users.component';
 import { StoreUserComponent } from './store-user/store-user.component';
 import {SharedModule} from '../shared/shared.module';
+import { UserViewComponent } from './user-view/user-view.component';
+import { UserCollectionComponent } from './user-collection/user-collection.component';
 
 
 
 @NgModule({
   declarations:[
-    UserComponent, 
-    UsersComponent, 
-    StoreUserComponent
+    UserCollectionComponent, 
+    StoreUserComponent, UserViewComponent, UserCollectionComponent
   ],
   imports: [
     SharedModule,

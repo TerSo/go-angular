@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { FormSettings } from '../../models/form';
-import { BuildUserForm, InfoUser } from '../../models/user';
+import { BuildUserForm, InfoUser, User } from '../../models/user';
 import {ApiService} from '../../services/api.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class StoreUserComponent implements OnInit {
   form:     FormGroup;
   settings: FormSettings[];
 
-  constructor( private api: ApiService, private route: ActivatedRoute) { 
+  constructor( private api: ApiService, private route: ActivatedRoute, private router: Router) { 
     this.id = Number(this.route.snapshot.paramMap.get('ID'));
     this.user = JSON.parse(this.route.snapshot.paramMap.get('user'));
     this.settings = BuildUserForm();
@@ -46,6 +47,11 @@ export class StoreUserComponent implements OnInit {
 
   ngOnInit() {
    
+  }
+
+  storedUser(user: User) {
+    console.log(user)
+    this.router.navigateByUrl('/admin/users/' + user['ID']);
   }
 
 }

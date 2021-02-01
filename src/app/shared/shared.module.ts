@@ -13,10 +13,9 @@ import {MatCardModule} from '@angular/material/card';
 /** Shared components */
 import {StoreComponent} from './store/store.component';
 import {ViewComponent} from './view/view.component';
-import {CollectionComponent} from './collection/collection.component'
 
 @NgModule({
-  declarations: [StoreComponent, ViewComponent, CollectionComponent],
+  declarations: [StoreComponent, ViewComponent],
   imports: [
     CommonModule,
     MatListModule,
@@ -36,8 +35,7 @@ import {CollectionComponent} from './collection/collection.component'
     MatFormFieldModule,
     MatCardModule,
     StoreComponent,
-    ViewComponent,
-    CollectionComponent
+    ViewComponent
   ]
 })
 export class SharedModule { }

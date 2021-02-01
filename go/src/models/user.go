@@ -78,12 +78,12 @@ func (db *DB) UpdateUser(user *User, id uint64) (*User, error) {
     return user, nil
 }
 
-func (db *DB) DeleteUser(id uint64) (string, error) {
+func (db *DB) DeleteUser(id uint64) (uint, error) {
     deleted := db.Delete(&User{}, id)
     if deleted.Error != nil {
-        return "", deleted.Error
+        return 500, deleted.Error
 	}
-    return "ok", nil
+    return 200, nil
 }
 
 func (db *DB) BuildUser(user *User) (bool) {

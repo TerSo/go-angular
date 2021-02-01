@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ApiService} from '../../services/api.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {ViewSettings} from '../../models/view';
 import { Router } from '@angular/router';
 
@@ -13,8 +12,9 @@ export class ViewComponent implements OnInit {
   @Input()  method:       string;
   @Input()  model:        string;
   @Input()  view:          ViewSettings[];
+  @Output() deleteEvent = new EventEmitter<number>();
   
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     
@@ -25,22 +25,7 @@ export class ViewComponent implements OnInit {
   }
 
   delete(id:number): void {
-    console.log(this.model)
-    this.api['delete'+ this.model](id || this.id)
-    .subscribe( 
-      (response: any) => {
-        if(response.status === 200) {
-          console.log(response)
-        }
-        console.log(response)
-      },
-      (error:any) => {
-        console.log(error);
-      },
-      () => {
-        console.log("completed");
-      }
-    );
+    this.deleteEvent.emit(id);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {FormGroup} from '@angular/forms';
 import {FormSettings} from '../../models/form';
@@ -14,6 +14,7 @@ export class StoreComponent implements OnInit {
   @Input()  obj:          any;
   @Input()  id:           number;
   @Input()  formSettings: FormSettings[];
+  @Output() obj$ = new EventEmitter<number>();
  
   constructor(private api: ApiService) {}
 
@@ -43,7 +44,7 @@ export class StoreComponent implements OnInit {
     .subscribe( 
       (response: any) => {
         if(response.status === 200) {
-          
+          this.obj$.emit(response.body);
         }
         console.log(response)
       },

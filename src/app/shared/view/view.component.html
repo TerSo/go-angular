@@ -21,8 +21,9 @@
         <mat-icon mat-list-icon>folder</mat-icon>
         <h3 mat-line>{{v.title}}</h3>
         <p mat-line>{{v.subTitle}}</p>
+        <button mat-button (click)="navigateTo(v.view)" routerLinkActive="active">VIEW</button>
         <button mat-button (click)="navigateTo(v.edit)" routerLinkActive="active">EDIT</button>
-        <button mat-button (click)="delete(v.id)" routerLinkActive="active" *ngIf="v.delete">DELETE</button>
+        <button mat-button (click)="delete(v.id)" *ngIf="v.delete">DELETE</button>
     </mat-list-item>
   </mat-nav-list>
 
